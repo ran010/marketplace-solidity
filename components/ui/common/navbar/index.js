@@ -8,13 +8,14 @@ export default function Navbar() {
   const { connect, isLoading, requireInstall } = useWeb3()
   const { account } = useAccount()
   const { pathname } = useRouter()
+
   return (
     <section>
       <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
         <nav className="relative" aria-label="Global">
-          <div className="flex justify-between items-center">
-            <div>
-            <ActiveLink href="/" >
+           <div className="flex flex-col xs:flex-row justify-between items-center">
+             <div>
+              <ActiveLink href="/" >
                 <a
                   className="font-medium mr-8 text-gray-500 hover:text-gray-900">
                   Home
@@ -33,10 +34,10 @@ export default function Navbar() {
                 </a>
               </ActiveLink>
             </div>
-            <div>
+            <div className="text-center">
               <ActiveLink href="/wishlist" >
                 <a
-                  className="font-medium mr-8 text-gray-500 hover:text-gray-900">
+                 className="font-medium sm:mr-8 mr-1 text-gray-500 hover:text-gray-900">
                   Wishlist
                 </a>
               </ActiveLink>
@@ -46,18 +47,13 @@ export default function Navbar() {
                   onClick={connect}>
                     Loading...
                 </Button> :
-                web3 != null ?
                 account.data ?
                 <Button
                   hoverable={false}
                   className="cursor-default">
                   Hi there {account.isAdmin && "Admin"}
                 </Button> :
-                  requireInstall ?
-                <Button
-                  onClick={connect}>
-                  Connect
-                </Button> :
+                requireInstall ?
                 <Button
                   onClick={() => window.open("https://metamask.io/download.html", "_blank")}>
                   Install Metamask
@@ -71,7 +67,8 @@ export default function Navbar() {
           </div>
         </nav>
       </div>
-      { account.data && !pathname.includes("/marketplace") && 
+      { account.data &&
+        !pathname.includes("/marketplace") &&
         <div className="flex justify-end pt-1 sm:px-6 lg:px-8">
           <div className="text-white bg-indigo-600 rounded-md p-2">
             {account.data}
